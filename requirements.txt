@@ -1,1 +1,6 @@
 torch
+datasets
+transformers
+torchvision
+sklearn
+PIL

@@ -1,3 +1,4 @@
 *:Zone.Identifier
 *.Identifier
 /images
+/huggingface_fer_model
