@@ -1,6 +1,19 @@
 from picamera2 import Picamera2
 import cv2
 import time
+from datasets import load_dataset
+from transformers import AutoFeatureExtractor  , AutoModelForImageClassification, TrainingArguments, Trainer
+from torch.utils.data import Dataset
+from torchvision import transforms
+from sklearn.metrics import accuracy_score, precision_recall_fscore_support
+from PIL import Image
+import torch
+
+# Transform function for inference (single image)
+def transform_inference(image):
+    image = image.convert("RGB")  # Ensure RGB format
+    inputs = feature_extractor(image, return_tensors="pt")  # Apply the same feature extractor
+    return inputs
 
 def main():
     picam2 = Picamera2()
@@ -14,6 +27,17 @@ def main():
     alpha = 0.1  # Smoothing factor for FPS
     frame_count = 0
 
+    print(torch.cuda.is_available())
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(device)
+    
+    model = "resnet_50_affectnethq-fer2013_model"
+    feature_extractor = AutoFeatureExtractor.from_pretrained(model)
+    model = AutoModelForImageClassification.from_pretrained(model).to(device)
+    model.eval()
+    
+    label_mapping = {0: "Neutral", 1: "Happy", 2: "Sad", 3: "Angry", 4: "Surprise", 5: "Fear", 6: "Disgust"}  # Adjust based on model
+
     while True:
         frame = picam2.capture_array()  # Capture frame
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)  # Convert to grayscale
@@ -22,7 +46,20 @@ def main():
             faces = face_cascade.detectMultiScale(gray, scaleFactor=1.2, minNeighbors=5, minSize=(30, 30))
         
         for (x, y, w, h) in faces:
+
+            face = frame[y:y+h, x:x+w]  # Crop face
+            face_pil = Image.fromarray(cv2.cvtColor(face, cv2.COLOR_BGR2RGB))  # Convert to PIL image
+    
+            inputs = transform_inference(face_pil)
+            inputs = {k: v.to(device) for k, v in inputs.items()}  # Move inputs to the correct device
+    
+            with torch.no_grad():
+                outputs = model(**inputs)
+                prediction = outputs.logits.argmax(dim=-1).item()
+                emotion = label_mapping.get(prediction, "Unknown")
+    
             cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)  # Draw rectangle around faces
+            cv2.putText(frame, emotion, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 0, 0), 2)
         
         frame_count = frame_count + 1
         
