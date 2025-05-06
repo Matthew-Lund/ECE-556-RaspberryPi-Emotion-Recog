@@ -17,7 +17,7 @@ def rolling_avg(times):
     return sum(times) / len(times) if times else 0.0
 
 # Load model and feature extractor
-model_name = "mobilenet_v2_affectnethq-fer2013_model_fixed_labels"
+model_name = "mobilenet_v2_affectnethq-fer2013_quantized_pruned"
 feature_extractor = AutoFeatureExtractor.from_pretrained(model_name)
 model = AutoModelForImageClassification.from_pretrained(
     model_name, ignore_mismatched_sizes=True
