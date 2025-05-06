@@ -31,9 +31,10 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(device)
     
-    model = "resnet_50_affectnethq-fer2013_model"
+    model = "mobilenet_v2_affectnethq-fer2013_quantized_pruned"
     feature_extractor = AutoFeatureExtractor.from_pretrained(model)
-    model = AutoModelForImageClassification.from_pretrained(model).to(device)
+    model = AutoModelForImageClassification.from_pretrained(model, num_labels=7, ignore_mismatched_sizes=True).to(device)
+    model.load_state_dict(torch.load("mobilenet_v2_affectnethq-fer2013_quantized_pruned\quantized_model.pth"))
     model.eval()
     
     label_mapping = {0: "Neutral", 1: "Happy", 2: "Sad", 3: "Angry", 4: "Surprise", 5: "Fear", 6: "Disgust"}  # Adjust based on model
