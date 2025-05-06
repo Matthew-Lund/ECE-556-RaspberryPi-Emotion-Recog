@@ -63,7 +63,22 @@ File Size Comparison
 | Config                         | Memory Usage | CPU Usage | Power Consumption | Inference Time |
 |-------------------------------|--------------|-----------|-------------------|----------------|
 | Idle                          | N/A          | 2%        | 2.03 Watts        | N/A            |
-| No Model (Just Display Window)| 330MB        | 5%        | 3.78 Watts        | N/A            |
-| Quant + Pruned                | 430MB        | 32%       | 4.69 Watts        | 110ms          |
-| Full Model                    | 470MB        | 37%       | 5.23 Watts        | 130ms          |
+| No Model (Just Display Window)| 330MB        | 5%        | 3.24 Watts        | N/A            |
+| Quant + Pruned                | 430MB        | 32%       | 4.37 Watts        | 110ms          |
+| Full Model                    | 470MB        | 37%       | 5.51 Watts        | 130ms          |
 
+Full Model Power Consumption:
+
+![Full Model Power](full_power.png)
+
+Pruned + Quantized Model Power Consumption:
+
+![Quant Model Power](quant_power.png)
+
+Full Model Inference Time:
+
+![Full Model Time](full_inference_time.png)
+
+Pruned + Quantized Model Inference Time:
+
+![Quant Model Time](quant_inference_time.png)
