@@ -13,6 +13,23 @@ Demo example was run on Raspberry Pi 5 with a IMX708 camera module. Cloning the 
 # Architecture Diagram:
 ![Diagram](Model_architecture.PNG)
 
+MobileNet V2 Model Architecture
+| Layer Type                  | Input Size    | Output Size   | Kernel Size | Stride | Expansion Factor |
+|----------------------------|---------------|----------------|-------------|--------|------------------|
+| Initial Conv               | 224x224x3     | 112x112x32     | 3x3         | 2      | -                |
+| Inverted Residual Block    | 112x112x32    | 112x112x16     | 3x3         | 1      | 1                |
+| Inverted Residual Block x2 | 112x112x16    | 56x56x24       | 3x3         | 2      | 6                |
+| Inverted Residual Block x3 | 56x56x24      | 28x28x32       | 3x3         | 2      | 6                |
+| Inverted Residual Block x4 | 28x28x32      | 14x14x64       | 3x3         | 2      | 6                |
+| Inverted Residual Block x3 | 14x14x64      | 14x14x96       | 3x3         | 1      | 6                |
+| Inverted Residual Block x3 | 14x14x96      | 7x7x160        | 3x3         | 2      | 6                |
+| Inverted Residual Block x1 | 7x7x160       | 7x7x320        | 3x3         | 1      | 6                |
+| Final Conv                 | 7x7x320       | 7x7x1280       | 1x1         | 1      | -                |
+| Global Avg Pooling         | 7x7x1280      | 1x1x1280       | -           | -      | -                |
+| Fully Connected            | 1x1x1280      | 1x1x1000       | -           | -      | -                |
+
+![MobileNet V2 Model Architecture](The-architecture-of-MobileNetV2-DNN.png)
+Tragoudaras, Antonios & Stoikos, Pavlos & Fanaras, Konstantinos & Tziouvaras, Athanasios & Floros, George & Dimitriou, Georgios & Kolomvatsos, Kostas & Stamoulis, Georgios. (2022). Design Space Exploration of a Sparse MobileNetV2 Using High-Level Synthesis and Sparse Matrix Techniques on FPGAs. Sensors. 22. 4318. 10.3390/s22124318. 
 
 # Model Performance Analysis
 
