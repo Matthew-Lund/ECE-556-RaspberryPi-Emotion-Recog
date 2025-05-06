@@ -9,6 +9,7 @@ Demo example was run on Raspberry Pi 5 with a IMX708 camera module. Cloning the 
 2. python3 original_example.py
 
 # Architecture Diagram:
+![Diagram](Model_architecture.PNG)
 
 
 # Model Performance Analysis
