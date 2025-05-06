@@ -31,7 +31,7 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(device)
     
-    model = "resnet_50_affectnethq-fer2013_model"
+    model = "mobilenet_v2_affectnethq-fer2013_model_fixed_labels"
     feature_extractor = AutoFeatureExtractor.from_pretrained(model)
     model = AutoModelForImageClassification.from_pretrained(model).to(device)
     model.eval()
