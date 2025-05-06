@@ -38,12 +38,15 @@ F1:
 # On Device Measurements
 
 File Size Comparison
-Model | File Size
-Full | 13.5MB
-Quant + Prune | 8.68MB
+| Model           | File Size |
+|-----------------|-----------|
+| Full            | 13.5MB    |
+| Quant + Prune   | 8.68MB    |
 
-Config | Memory Usage | CPU Usage | Power Consumption | Inference Time
-Idle | N/A | 2% | 2.03 Watts | N/A
-No Model (Just Display Window) | 330MB | 5% | 3.78 Watts | N/A
-Quant + Pruned | 430MB | 32% | 4.69 Watts | 110ms
-Full Model | 470MB | 37% | 5.23 Watts | 130ms
+| Config                         | Memory Usage | CPU Usage | Power Consumption | Inference Time |
+|-------------------------------|--------------|-----------|-------------------|----------------|
+| Idle                          | N/A          | 2%        | 2.03 Watts        | N/A            |
+| No Model (Just Display Window)| 330MB        | 5%        | 3.78 Watts        | N/A            |
+| Quant + Pruned                | 430MB        | 32%       | 4.69 Watts        | 110ms          |
+| Full Model                    | 470MB        | 37%       | 5.23 Watts        | 130ms          |
+
