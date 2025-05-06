@@ -77,8 +77,8 @@ Pruned + Quantized Model Power Consumption:
 
 Full Model Inference Time:
 
-![Full Model Time](full_inference_time.png)
+![Full Model Time](full_time.png)
 
 Pruned + Quantized Model Inference Time:
 
-![Quant Model Time](quant_inference_time.png)
+![Quant Model Time](quant_time.png)
