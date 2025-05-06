@@ -33,6 +33,8 @@ Tragoudaras, Antonios & Stoikos, Pavlos & Fanaras, Konstantinos & Tziouvaras, At
 
 # Model Performance Analysis
 
+We evaluated different model architectures to find a base model with sufficient accuracy. The FER-2013 dataset is small and commonly has overfitting, so we added the affectnet dataset to it as well. The combination led to sufficient accuracy (>0.85) for the mobilenet architecture. ResNet-50 and ResNet-26 both struggled for accuracy and validation loss. The Precision and Accuracy plots closely resemble each other as the dataset was closely balanced.
+
 Validation Loss:
 
 ![Validation Loss Comparison](validation_loss_comparison.png)
@@ -54,6 +56,8 @@ F1:
 
 # On Device Measurements
 
+For model compression we quantized model weights to 8-bits, in addition to a 25% channel prune on the convolution layers. This was able to reduce the model size from 13.5MB to 8.68MB. The accuracy tradeoff was a -4.19% loss. The 25% prune was chosen based on the quantized + pruned model accuracy. We were targeting a loss less than 5% and an increased aggression in channel pruning led to a sharp drop in accuracy greater than our threshold.
+
 File Size Comparison
 | Model           | File Size |
 |-----------------|-----------|
@@ -66,6 +70,8 @@ File Size Comparison
 | No Model (Just Display Window)| 330MB        | 5%        | 3.24 Watts        | N/A            |
 | Quant + Pruned                | 430MB        | 32%       | 4.37 Watts        | 110ms          |
 | Full Model                    | 470MB        | 37%       | 5.51 Watts        | 130ms          |
+
+Power consumption was calculated using the power_monitor.py script. It reads the Raspberry Pi PMIC Voltage and Current. This reports all of the core voltages and currents in addition to IO such as the ADC. The power was computed with voltage and current then summed for each component. Sampling was done every 0.1 seconds over a 10 second span and the average power consumption was computed for this period. Additionally, plots below show power consumption over time, demonstrating power spikes during model inferencing.
 
 Full Model Power Consumption:
 
